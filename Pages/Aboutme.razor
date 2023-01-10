@@ -1,16 +1,19 @@
 ﻿@page "/aboutme"
+@using System.IO
+@inject IJSRuntime JS
+
 
 <PageTitle>Aboutme</PageTitle>
 
 <h1>About Me</h1>
 
 <img src="images/linkedinlogo.png" alt="linkedin" width="25" height="25">
-<a href="https://www.linkedin.com/in/thomas-tramp-a41b8216a">
+<a target="_blank" href="https://www.linkedin.com/in/thomas-tramp-a41b8216a">
     Linkedin
 </a>
 <br />
 <img src="images/github logo.png" alt="linkedin" width="25" height="25">
-<a href="https://github.com/tomt15"> Github </a>
+<a target="_blank" href="https://github.com/tomt15"> Github </a>
 
 <br />
 <br />
@@ -23,7 +26,7 @@
                 <b>SKILLS</b>
                 <ul>
                     <li>
-                        .Net Framework 4.8 & Core
+                        .Net Framework 4.6 - 4.8 & Core
                     </li>
                     <li>C#</li>
                     <li>JavaScript</li>
@@ -39,6 +42,23 @@
                     <li>React (Personal Use and Learning)</li>
                 </ul>
             </div>
+
+            <br />
+
+            <div id="Education" class="border">
+                <b>EDUCATION</b>
+                <p>
+                    <b>Wayne, NE</b>, Wayne State Colleague — CIS Programming Analysis and <i>Business Minor</i>
+                </p>
+                <p class="text-muted">
+                    2015 - May 2019
+                    <i>3.731 GPA</i>
+                    Member of UPE (Upsilon Pi Epsilon
+                    International Honorary Society for Computing Maj
+                </p>
+            </div>
+
+            <br />
 
             <div id="CommunicationANDLeadership" class="border">
                 <b>Communication and Leadership</b>
@@ -116,11 +136,77 @@
                     </p>
                 </div>
             </div>
+
+            <br />
+
+            <div id="Projects" class="border">
+                <b>Past Projects</b>
+
+                <br />
+
+                <dl>
+                    <dt><b>Updating tools and frameworks</b> - <i>Streck</i></dt>
+                    <dd>
+                        <p>
+                            Started research in implementing Azure’s Git.
+                            Moving frameworks to the latest supported version.
+                        </p>
+                    </dd>
+
+                    <dt><b>Past Due Calculations</b> — <i>Nelnet</i></dt>
+                    <dd>
+                        <p>
+                            Adding logic to filter through requested terms for a payment platform, compare them against all terms a student had charges and/or payments, and figure out the difference in the balance of what was not requested and return it in XML.
+                        </p>
+                    </dd>
+
+                    <dt><b>Refactoring of Entire Business Logic</b> — <i>Nelnet</i></dt>
+                    <dd>
+                        <p>
+                            Rework all logic for business. The process was done to minimize and take advantage of repeatable code. Pretty straight forward but the end product was much better and much cleaner. I was given recognition on my team for this achievement.
+                        </p>
+                    </dd>
+
+                    <dt><b>Creation of Unit tests</b> — <i>Nelnet</i></dt>                    
+                    <dd>
+                        <p>
+                            Fairly straight forward, but I brought unit testing to my work in Colleague code as none had been implemented before.
+                        </p>
+                    </dd>
+
+                    <dt><b>Automation of Merges with third party code</b> - <i>Nelnet</i></dt>
+                    <dd>
+                        <p>
+                            Creation of PowerShell scripts that took care of a lot of manual processes that were involved with code merges with third party code. This included moving .dll files around to the according areas, building in a specific order, checking for version numbers AND having the ability to have a console to approve of the version on number or manually update it. This was extremely fun, please ask about it.
+                        </p>
+                    </dd>
+                </dl>
+            </div>
         </div>
         @*        </div>*@
     </div>
 </div>
 
-@code {
+<button @onclick="DownloadFileFromStream">
+    Download File From Stream
+</button>
 
+@code {
+    private Stream GetFileStream()
+    {
+        var randomBinaryData = new byte[50 * 1024];
+        var fileStream = new MemoryStream(randomBinaryData);
+
+        return fileStream;
+    }
+
+    private async Task DownloadFileFromStream()
+    {
+        var fileStream = GetFileStream();
+        var fileName = "file/Thomas N Tramp Resule.pdf";
+
+        using var streamRef = new DotNetStreamReference(stream: fileStream);
+
+        await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+    }
 }

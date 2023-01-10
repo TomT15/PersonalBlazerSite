@@ -1,4 +1,13 @@
-#WorkExperience p {
+/*#WorkExperience p {
+    margin: 0;
+    padding: 0;
+}
+*/
+#education {
+    margin: 2%;
+}
+
+#Resume p {
     margin: 0;
     padding: 0;
 }
@@ -11,6 +20,14 @@
     padding: 10%;
 }
 
+#Education {
+    padding: 10%;
+}
+
 #Title {
+    padding: 2.5%;
+}
+
+#Projects {
     padding: 2.5%;
 }
