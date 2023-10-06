@@ -1,0 +1,28 @@
+@page "/filedownload"
+@using System.IO
+@inject IJSRuntime JS
+
+<br />
+<br />
+
+<button @onclick="DownloadFileFromStream">
+    Download File From Stream
+</button>
+
+@code {
+    private Stream GetFileStream()
+    {
+        var stream = new FileStream(@"Files/Resume/Thomas Nicholas Tramp Resume.pdf", FileMode.Open);
+        return stream;
+    }
+
+    private async Task DownloadFileFromStream()
+    {
+        var fileStream = GetFileStream();
+        var fileName = "Thomas Nicholas Tramp Resume.pdf";
+
+        using var streamRef = new DotNetStreamReference(stream: fileStream);
+
+        await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+    }
+}
